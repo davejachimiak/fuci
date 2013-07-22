@@ -9,6 +9,7 @@ module Fuci
     mount_default_testers
     fetch_log
     detect_tester_failure_in_log
+    collect_failures
   end
 
   private
@@ -31,9 +32,12 @@ module Fuci
   end
 
   def self.detect_tester_failure_in_log
-    @detected_tester = testers.detect do |tester|
+    self.detected_tester = testers.detect do |tester|
       tester.indicates_failure? log
     end
+  end
+
+  def self.collect_failures
   end
 end
 

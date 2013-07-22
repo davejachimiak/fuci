@@ -30,7 +30,11 @@ describe Fuci do
       Fuci.run
     end
 
-    it 'parses the log for and collects failures'
+    it 'parses the log for and collects failures' do
+      Fuci.expects :collect_failures
+      Fuci.run
+    end
+
     it 'runs those failures locally'
   end
 
