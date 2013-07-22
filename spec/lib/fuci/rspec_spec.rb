@@ -27,4 +27,17 @@ describe Fuci::RSpec do
       end
     end
   end
+
+  describe '#command' do
+    it 'returns "rspec <failure string>"' do
+      log = """
+        rspec is #ljasdfois\nrspec ok #jcicisj\nrspec for #ie
+        iejfasdi\nrspec testing #iiiirrpepwpqapc
+      """
+
+      command = @rspec.command log
+
+      expect(command).to_equal 'rspec is ok for testing'
+    end
+  end
 end

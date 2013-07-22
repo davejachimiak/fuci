@@ -5,5 +5,10 @@ module Fuci
     def indicates_failure? log
       log.include? FAILURE_INDICATOR
     end
+
+    def command log
+      failures = log.scan(/rspec (.*) #/).join ' '
+      "rspec #{failures}"
+    end
   end
 end
