@@ -1,6 +1,7 @@
 # Fuci
+[![Build Status](https://travis-ci.org/davejachimiak/fuci.png?branch=dj-initial_functionality)](https://travis-ci.org/davejachimiak/fuci)
 
-TODO: Write a gem description
+Run failed tests from your last build on the command line.
 
 ## Installation
 
@@ -18,7 +19,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Write usage instructions.
 
 ## Contributing
 
