@@ -20,4 +20,7 @@ module Fuci
   def self.testers
     @testers ||= []
   end
+
+  def self.initialize_testers
+  end
 end
