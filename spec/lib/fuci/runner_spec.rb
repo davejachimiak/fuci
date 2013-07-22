@@ -6,7 +6,6 @@ describe Fuci::Runner do
   describe '.run' do
     before do
       Fuci::Runner.expects :ensure_server
-      Fuci::Runner.expects :mount_default_testers
       Fuci::Runner.expects :fetch_log
       Fuci::Runner.expects :detect_tester_failure
       Fuci::Runner.expects :collect_failures
@@ -14,7 +13,6 @@ describe Fuci::Runner do
     end
 
     it 'ensures a server is present, ' +
-      'mounts the default testers, ' +
       'fetches the log from the server, ' +
       'detects which tester has the failure, ' +
       "collects the tester's failure from the log, " +
@@ -36,7 +34,8 @@ describe Fuci::Runner do
       before { Fuci::Runner.stubs(:server).returns nil }
 
       it 'raises an error with an appropriate message' do
-        expect { Fuci::Runner.send :ensure_server }.to_raise Fuci::ServerError
+        expect { Fuci::Runner.send :ensure_server }.
+          to_raise Fuci::Runner::ServerError
       end
     end
   end
@@ -51,16 +50,6 @@ describe Fuci::Runner do
     end
   end
 
-  describe '.mount_default_testers' do
-    it 'mounts the default tester gems' do
-      testers = [:an_teacher, :parend, :loop]
-      Fuci::Runner.stubs(:default_testers).returns testers
-      Fuci::Runner.send :mount_default_testers
-
-      expect(Fuci::Runner.testers).to_equal [:an_teacher, :parend, :loop]
-    end
-  end
-
   describe '.detect_tester_failure' do
     it 'detects the first tester failure in the log' do
       rspec, konacha, cucumber = mock, mock, mock
@@ -69,6 +58,7 @@ describe Fuci::Runner do
       konacha.stubs(:indicates_failure?).with(log).returns true
       testers = [rspec, konacha, cucumber]
       Fuci::Runner.stubs(:testers).returns testers
+
       Fuci::Runner.send :detect_tester_failure
 
       expect(Fuci::Runner.send :detected_tester ).to_equal konacha
