@@ -15,7 +15,7 @@ module Fuci
   end
 
   def self.fetch_log
-    server.fetch_log
+    @log = server.fetch_log
   end
 end
 

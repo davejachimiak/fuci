@@ -46,8 +46,11 @@ describe Fuci do
   describe '#fetch_log' do
     it 'delegates to the server' do
       Fuci.stubs(:server).returns poop = mock
-      poop.expects :fetch_log
+      poop.stubs(:fetch_log).returns log = mock
       Fuci.send :fetch_log
+      fuci_log = Fuci.instance_variable_get(:@log)
+
+      expect(fuci_log).to_equal log
     end
   end
 end
