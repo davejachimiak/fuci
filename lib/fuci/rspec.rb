@@ -2,6 +2,7 @@ module Fuci
   class RSpec < Fuci::Tester
     FAILURE_INDICATOR = 'Failed examples:'
     BASE_COMMAND      = 'rspec'
+    FAIL_FILE_CAPTURE = /rspec (.*) #/
 
     def indicates_failure? log
       log.include? FAILURE_INDICATOR
@@ -18,7 +19,7 @@ module Fuci
     end
 
     def failures log
-      log.scan(/rspec (.*) #/).join ' '
+      log.scan(FAIL_FILE_CAPTURE).join ' '
     end
   end
 end
