@@ -1,5 +1,5 @@
 require 'minitest/spec/expect'
-require 'mocha'
+require 'mocha/setup'
 require_relative '../../lib/fuci'
 
 describe Fuci do
@@ -7,16 +7,20 @@ describe Fuci do
     before do
       @server     = mock
       Fuci.server = @server
+      Fuci.expects :fetch_log
     end
 
     it 'ensures a server is present' do
-      Fuci.stubs :fetch_log
       Fuci.expects :ensure_server
       Fuci.run
     end
 
+    it 'ensures at least one tester plugin' do
+      Fuci.expects :ensure_tester
+      Fuci.run
+    end
+
     it 'grabs the log from the server' do
-      Fuci.expects :fetch_log
       Fuci.run
     end
 
