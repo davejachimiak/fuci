@@ -5,8 +5,7 @@ module Fuci
     extend Forwardable
 
     def_delegators :Fuci, :server, :testers, :initialize_testers
-
-    attr_accessor :log, :detected_tester, :failures
+    attr_accessor  :log, :detected_tester, :failures
 
     def run
       ensure_server

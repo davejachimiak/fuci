@@ -1,6 +1,9 @@
 require 'fuci/runner'
+require 'fuci/rspec'
 
 module Fuci
+  DEFAULT_TESTERS = [Fuci::RSpec]
+
   class << self
     attr_accessor :server
   end
@@ -18,7 +21,11 @@ module Fuci
   end
 
   def self.testers
-    @testers ||= []
+    @testers ||= default_testers
+  end
+
+  def self.default_testers
+    DEFAULT_TESTERS
   end
 
   def self.initialize_testers

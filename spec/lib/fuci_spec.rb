@@ -1,7 +1,9 @@
 require_relative '../spec_helper'
-require_relative '../../lib/fuci'
 
+stub_class 'Fuci::Tester'
 stub_class 'Fuci::Runner'
+
+require_relative '../../lib/fuci'
 
 describe Fuci do
   describe '.run' do
@@ -23,6 +25,8 @@ describe Fuci do
   end
 
   describe '.testers' do
+    after { Fuci.instance_variable_set :@testers, [] }
+
     it 'is an array accessor' do
       expect(Fuci.testers).to_be_instance_of Array
     end
@@ -33,8 +37,9 @@ describe Fuci do
       @rspec, @konacha = mock, mock
       mocks = [@rspec, @konacha]
       mocks.each { |m| m.expects :to_ary }
+      Fuci.stubs(:default_testers).returns []
     end
-    after  { Fuci.instance_variable_set :@testers, [] }
+    after { Fuci.instance_variable_set :@testers, [] }
 
     describe 'when one to many args are passed in' do
       it 'adds the args to testers' do
