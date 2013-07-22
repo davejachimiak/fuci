@@ -7,6 +7,7 @@ describe Fuci do
     before do
       @server     = mock
       Fuci.server = @server
+      Fuci.stubs :collect_failures
       Fuci.expects :fetch_log
     end
 
@@ -87,6 +88,22 @@ describe Fuci do
       Fuci.send :detect_tester_failure_in_log
 
       expect(Fuci.detected_tester).to_equal konacha
+    end
+  end
+
+  describe '.collect_failures' do
+    it 'collects failures from the log with the detected tester' do
+      detected_tester = mock
+      Fuci.stubs(:log).returns log = mock
+      detected_tester.
+        stubs(:collect_failures).
+        with(log).
+        returns failures = mock
+      Fuci.stubs(:detected_tester).returns detected_tester
+
+      Fuci.send :collect_failures
+
+      expect(Fuci.failures).to_equal failures
     end
   end
 end

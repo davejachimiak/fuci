@@ -1,7 +1,8 @@
 module Fuci
+  DEFAULT_TESTERS = []
+
   class << self
-    attr_accessor :server, :log, :detected_tester
-    attr_reader :testers
+    attr_accessor :server, :log, :detected_tester, :testers, :failures
   end
 
   def self.run
@@ -19,8 +20,8 @@ module Fuci
   end
 
   def self.mount_default_testers
-    @testers ||= []
-    @testers += default_testers
+    self.testers ||= []
+    self.testers += default_testers
   end
 
   def self.fetch_log
@@ -28,7 +29,7 @@ module Fuci
   end
 
   def self.default_testers
-    []
+    DEFAULT_TESTERS
   end
 
   def self.detect_tester_failure_in_log
@@ -38,6 +39,7 @@ module Fuci
   end
 
   def self.collect_failures
+    self.failures = detected_tester.collect_failures log
   end
 end
 
