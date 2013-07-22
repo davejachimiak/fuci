@@ -29,7 +29,11 @@ describe Fuci do
   end
 
   describe '.add_testers' do
-    before { @rspec, @konacha = mock, mock }
+    before do
+      @rspec, @konacha = mock, mock
+      mocks = [@rspec, @konacha]
+      mocks.each { |m| m.expects :to_ary }
+    end
     after  { Fuci.instance_variable_set :@testers, [] }
 
     describe 'when one to many args are passed in' do
