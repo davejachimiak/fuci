@@ -9,4 +9,10 @@ describe Fuci::Tester do
       expect { @tester.indicates_failure? '' }.to_raise NotImplementedError
     end
   end
+
+  describe '#command' do
+    it 'raises a NotImplemented error' do
+      expect { @tester.command '' }.to_raise NotImplementedError
+    end
+  end
 end

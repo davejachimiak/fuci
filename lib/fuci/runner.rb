@@ -36,7 +36,7 @@ module Fuci
     end
 
     def self.run_failures
-      IO.popen detected_tester.command do |io|
+      IO.popen detected_tester.command(log) do |io|
         io.each { |string| puts string }
       end
     end

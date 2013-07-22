@@ -68,7 +68,11 @@ describe Fuci::Runner do
   describe '.run_failures' do
     it 'runs the failrues locally' do
       Fuci::Runner.stubs(:detected_tester).returns detected_tester = mock
-      detected_tester.stubs(:command).returns command = mock
+      Fuci::Runner.stubs(:log).returns log = mock
+      detected_tester.
+        stubs(:command).
+        with(log).
+        returns command = mock
       IO.expects(:popen).with command
 
       Fuci::Runner.send :run_failures

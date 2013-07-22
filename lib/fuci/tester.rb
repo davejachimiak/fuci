@@ -7,5 +7,9 @@ module Fuci
     def indicates_failure? log
       raise NotImplementedError
     end
+
+    def command log
+      raise NotImplementedError
+    end
   end
 end
