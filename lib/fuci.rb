@@ -8,6 +8,7 @@ module Fuci
     ensure_server
     mount_default_testers
     fetch_log
+    detect_tester_failure_in_log
   end
 
   private
@@ -27,6 +28,9 @@ module Fuci
 
   def self.default_testers
     []
+  end
+
+  def self.detect_tester_failure_in_log
   end
 end
 

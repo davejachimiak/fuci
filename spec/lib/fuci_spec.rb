@@ -24,7 +24,11 @@ describe Fuci do
       Fuci.run
     end
 
-    it 'detects the first framework in the log that has a failure'
+    it 'detects the first tester in the log that has a failure' do
+      Fuci.expects :detect_tester_failure_in_log
+      Fuci.run
+    end
+
     it 'parses the log for and collects failures'
     it 'runs those failures locally'
   end
