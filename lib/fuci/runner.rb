@@ -22,7 +22,7 @@ module Fuci
 
     def self.ensure_server
       unless server
-        raise Fuci::Runner::ServerError, 'A server must be attached to Fuci.'
+        raise Fuci::Runner::ServerError, 'A server must be declared in Fuci config.'
       end
     end
 
