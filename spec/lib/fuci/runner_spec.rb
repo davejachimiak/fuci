@@ -1,6 +1,7 @@
-require 'minitest/spec/expect'
-require 'mocha/setup'
+require_relative '../../spec_helper'
 require_relative '../../../lib/fuci/runner'
+
+stub_class 'IO'
 
 describe Fuci::Runner do
   describe '.run' do
@@ -8,7 +9,6 @@ describe Fuci::Runner do
       Fuci::Runner.expects :ensure_server
       Fuci::Runner.expects :fetch_log
       Fuci::Runner.expects :detect_tester_failure
-      Fuci::Runner.expects :collect_failures
       Fuci::Runner.expects :run_failures
     end
 
@@ -65,28 +65,11 @@ describe Fuci::Runner do
     end
   end
 
-  describe '.collect_failures' do
-    it 'collects failures from the log with the detected tester' do
-      detected_tester = mock
-      Fuci::Runner.stubs(:log).returns log = mock
-      detected_tester.
-        stubs(:collect_failures).
-        with(log).
-        returns failures = mock
-      Fuci::Runner.stubs(:detected_tester).returns detected_tester
-
-      Fuci::Runner.send :collect_failures
-
-      expect(Fuci::Runner.send :failures ).to_equal failures
-    end
-  end
-
   describe '.run_failures' do
     it 'runs the failrues locally' do
-      detected_tester, failures = mock, mock
-      Fuci::Runner.stubs(:detected_tester).returns detected_tester
-      Fuci::Runner.stubs(:failures).returns failures
-      detected_tester.expects(:run_failures).with failures
+      Fuci::Runner.stubs(:detected_tester).returns detected_tester = mock
+      detected_tester.stubs(:command).returns command = mock
+      IO.expects(:popen).with command
 
       Fuci::Runner.send :run_failures
     end

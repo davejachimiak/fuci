@@ -14,7 +14,6 @@ module Fuci
       ensure_server
       fetch_log
       detect_tester_failure
-      collect_failures
       run_failures
     end
 
@@ -36,12 +35,10 @@ module Fuci
       end
     end
 
-    def self.collect_failures
-      self.failures = detected_tester.collect_failures log
-    end
-
     def self.run_failures
-      detected_tester.run_failures failures
+      IO.popen detected_tester.command do |io|
+        io.each { |string| puts string }
+      end
     end
 
     class ServerError < StandardError; end;
