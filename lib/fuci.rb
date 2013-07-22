@@ -5,13 +5,17 @@ module Fuci
 
   def self.run
     ensure_server
-    server.fetch_log
+    fetch_log
   end
 
   private
 
   def self.ensure_server
     raise Fuci::ServerError, 'A server must be attached to Fuci' unless server
+  end
+
+  def self.fetch_log
+    server.fetch_log
   end
 end
 

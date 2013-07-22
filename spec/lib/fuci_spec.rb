@@ -7,20 +7,19 @@ describe Fuci do
     before do
       @server     = mock
       Fuci.server = @server
-
-      @server.expects :fetch_log
     end
 
     it 'ensures a server is present' do
+      Fuci.stubs :fetch_log
       Fuci.expects :ensure_server
       Fuci.run
     end
 
     it 'grabs the log from the server' do
+      Fuci.expects :fetch_log
       Fuci.run
     end
 
-    it 'plugs in the test frameworks'
     it 'detects the first framework in the log that has a failure'
     it 'parses the log for and collects failures'
     it 'runs those failures locally'
@@ -41,6 +40,14 @@ describe Fuci do
       it 'raises an error with an appropriate message' do
         expect { Fuci.send :ensure_server }.to_raise Fuci::ServerError
       end
+    end
+  end
+
+  describe '#fetch_log' do
+    it 'delegates to the server' do
+      Fuci.stubs(:server).returns poop = mock
+      poop.expects :fetch_log
+      Fuci.send :fetch_log
     end
   end
 end
