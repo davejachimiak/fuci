@@ -22,5 +22,6 @@ module Fuci
   end
 
   def self.initialize_testers
+    @testers = testers.map { |tester| tester.new }
   end
 end

@@ -66,4 +66,17 @@ describe Fuci do
       Fuci.server = nil
     end
   end
+
+  describe '.initialize_testers' do
+    it 'mutates the testers attribute to initialized testers' do
+      class Cool; end;
+      Fuci.instance_variable_set :@testers, [Cool]
+      Cool.stubs(:new).returns cool = mock
+      testers = [cool]
+
+      Fuci.initialize_testers
+
+      expect(Fuci.testers).to_equal testers
+    end
+  end
 end
