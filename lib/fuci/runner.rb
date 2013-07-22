@@ -21,7 +21,9 @@ module Fuci
     private
 
     def self.ensure_server
-      raise Fuci::Runner::ServerError, 'A server must be attached to Fuci.' unless server
+      unless server
+        raise Fuci::Runner::ServerError, 'A server must be attached to Fuci.'
+      end
     end
 
     def self.fetch_log
