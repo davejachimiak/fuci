@@ -8,6 +8,9 @@ module Fuci
       raise NotImplementedError
     end
 
+    # must return a command string to be executed
+    # by the system, e.g.
+    # "rspec ./spec/features/it_is_cool_spec.rb"
     def command log
       raise NotImplementedError
     end
