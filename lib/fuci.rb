@@ -5,7 +5,7 @@ module Fuci
 
   def self.run
     ensure_server
-    ensure_tester
+    mount_default_testers
     fetch_log
   end
 
@@ -15,7 +15,7 @@ module Fuci
     raise Fuci::ServerError, 'A server must be attached to Fuci' unless server
   end
 
-  def self.ensure_tester
+  def self.mount_default_testers
   end
 
   def self.fetch_log

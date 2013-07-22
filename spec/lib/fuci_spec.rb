@@ -3,7 +3,7 @@ require 'mocha/setup'
 require_relative '../../lib/fuci'
 
 describe Fuci do
-  describe '#run' do
+  describe '.run' do
     before do
       @server     = mock
       Fuci.server = @server
@@ -15,8 +15,8 @@ describe Fuci do
       Fuci.run
     end
 
-    it 'ensures at least one tester plugin' do
-      Fuci.expects :ensure_tester
+    it 'mounts the default testers' do
+      Fuci.expects :mount_default_testers
       Fuci.run
     end
 
@@ -29,7 +29,7 @@ describe Fuci do
     it 'runs those failures locally'
   end
 
-  describe '#ensure_server' do
+  describe '.ensure_server' do
     before { Fuci.stubs(:server).returns :AnServer }
 
     describe 'when a server is attached to the module' do
@@ -47,7 +47,7 @@ describe Fuci do
     end
   end
 
-  describe '#fetch_log' do
+  describe '.fetch_log' do
     it 'delegates to the server' do
       Fuci.stubs(:server).returns poop = mock
       poop.stubs(:fetch_log).returns log = mock
