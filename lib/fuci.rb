@@ -1,6 +1,7 @@
 module Fuci
   class << self
     attr_accessor :server
+    attr_reader :testers
   end
 
   def self.run
@@ -16,10 +17,16 @@ module Fuci
   end
 
   def self.mount_default_testers
+    @testers ||= []
+    @testers += default_testers
   end
 
   def self.fetch_log
     @log = server.fetch_log
+  end
+
+  def self.default_testers
+    []
   end
 end
 

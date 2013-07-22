@@ -57,4 +57,14 @@ describe Fuci do
       expect(fuci_log).to_equal log
     end
   end
+
+  describe '.mount_default_testers' do
+    it 'mounts the default tester gems' do
+      testers = [:an_teacher, :parend, :loop]
+      Fuci.stubs(:default_testers).returns testers
+      Fuci.send :mount_default_testers
+
+      expect(Fuci.testers).to_equal [:an_teacher, :parend, :loop]
+    end
+  end
 end
