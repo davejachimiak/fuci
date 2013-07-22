@@ -1,5 +1,5 @@
-require 'mocha'
 require 'minitest/spec/expect'
+require 'mocha'
 require_relative '../../lib/fuci'
 
 describe Fuci do
@@ -15,5 +15,14 @@ describe Fuci do
     it 'detects the first framework in the log that has a failure'
     it 'parses the log for and collects failures'
     it 'runs those failures locally'
+  end
+
+  describe '#ensure_server' do
+    describe 'when a server is attached to the module' do
+      it 'is a no-op' do
+        Fuci.stubs(:server).returns :AnServer
+        expect(Fuci.send :ensure_server ).to_equal nil
+      end
+    end
   end
 end
