@@ -16,6 +16,7 @@ describe Fuci do
     end
 
     it 'mounts the default testers' do
+      Fuci.stubs(:detect_tester_failure_in_log)
       Fuci.expects :mount_default_testers
       Fuci.run
     end
@@ -56,9 +57,8 @@ describe Fuci do
       Fuci.stubs(:server).returns poop = mock
       poop.stubs(:fetch_log).returns log = mock
       Fuci.send :fetch_log
-      fuci_log = Fuci.instance_variable_get(:@log)
 
-      expect(fuci_log).to_equal log
+      expect(Fuci.log).to_equal log
     end
   end
 
@@ -69,6 +69,20 @@ describe Fuci do
       Fuci.send :mount_default_testers
 
       expect(Fuci.testers).to_equal [:an_teacher, :parend, :loop]
+    end
+  end
+
+  describe '.detect_tester_failure_in_log' do
+    it 'detects the first tester failure in the log' do
+      rspec, konacha, cucumber = mock, mock, mock
+      Fuci.log = log = mock
+      [rspec, cucumber].each { |t| t.stubs :indicates_failure? }
+      konacha.stubs(:indicates_failure?).with(log).returns true
+      testers = [rspec, konacha, cucumber]
+      Fuci.stubs(:testers).returns testers
+      Fuci.send :detect_tester_failure_in_log
+
+      expect(Fuci.detected_tester).to_equal konacha
     end
   end
 end

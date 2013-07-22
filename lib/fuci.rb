@@ -1,6 +1,6 @@
 module Fuci
   class << self
-    attr_accessor :server
+    attr_accessor :server, :log, :detected_tester
     attr_reader :testers
   end
 
@@ -23,7 +23,7 @@ module Fuci
   end
 
   def self.fetch_log
-    @log = server.fetch_log
+    self.log = server.fetch_log
   end
 
   def self.default_testers
@@ -31,6 +31,9 @@ module Fuci
   end
 
   def self.detect_tester_failure_in_log
+    @detected_tester = testers.detect do |tester|
+      tester.indicates_failure? log
+    end
   end
 end
 
