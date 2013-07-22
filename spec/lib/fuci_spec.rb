@@ -36,7 +36,10 @@ describe Fuci do
       Fuci.run
     end
 
-    it 'runs those failures locally'
+    it 'runs those failures locally' do
+      Fuci.expects :run_failures
+      Fuci.run
+    end
   end
 
   describe '.ensure_server' do

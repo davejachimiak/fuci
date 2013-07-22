@@ -11,6 +11,7 @@ module Fuci
     fetch_log
     detect_tester_failure_in_log
     collect_failures
+    run_failures
   end
 
   private
@@ -40,6 +41,9 @@ module Fuci
 
   def self.collect_failures
     self.failures = detected_tester.collect_failures log
+  end
+
+  def self.run_failures
   end
 end
 
