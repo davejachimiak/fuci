@@ -3,24 +3,28 @@ stub_class 'Fuci::Tester'
 require_relative '../../../lib/fuci/rspec'
 
 describe Fuci::RSpec do
+  before { @rspec = Fuci::RSpec.new }
   describe 'composition' do
     it 'inherits from Fuci::Tester' do
-      expect(Fuci::RSpec.new).to_be_kind_of Fuci::Tester
+      expect(@rspec).to_be_kind_of Fuci::Tester
     end
   end
 
   describe '#indicates_failure?' do
-    describe 'when the log passed in has "Failed examples: "' do
-      it 'returns true' do
-        rspec = Fuci::RSpec.new
-        log   = "irjioerijoijoaf;joia;ijoawfeFailed examples: "
+    describe 'when the log passed in has "Failed examples:"' do
+      before { @log = "irjioerijoijoaf;joia;ijoawfeFailed examples:" }
 
-        expect(rspec.indicates_failure?(log)).to_equal true
+      it 'returns true' do
+        expect(@rspec.indicates_failure?(@log)).to_equal true
       end
     end
 
-    describe 'when the log passed in has no "Failed examples: "' do
-      it 'returns false'
+    describe 'when the log passed in has no "Failed examples:"' do
+      before { @log = "irjioerijoijpoop: " }
+
+      it 'returns false' do
+        expect(@rspec.indicates_failure?(@log)).to_equal false
+      end
     end
   end
 end
