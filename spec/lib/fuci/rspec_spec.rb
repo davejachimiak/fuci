@@ -37,7 +37,7 @@ describe Fuci::RSpec do
 
       command = @rspec.command log
 
-      expect(command).to_equal 'rspec is ok for testing'
+      expect(command).to_equal 'rspec --tty is ok for testing'
     end
   end
 end
