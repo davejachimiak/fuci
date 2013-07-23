@@ -1,7 +1,17 @@
 module Fuci
   class Server
 
-    # Must return a string with characters denoting ascii color removed.
+    # must return either of the following
+    # symbols:
+    # :red (failure),
+    # :yellow (errored),
+    # :green (passing)
+    def build_status
+      raise NotImplementedError
+    end
+
+    # must return a string with characters
+    # denoting ascii color removed
     def fetch_log
       raise NotImplementedError
     end

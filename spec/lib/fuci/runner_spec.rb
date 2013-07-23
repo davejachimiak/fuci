@@ -10,6 +10,7 @@ describe Fuci::Runner do
     before do
       @runner.expects :initialize_testers!
       @runner.expects :initialize_server!
+      @runner.expects :check_build
       @runner.expects :fetch_log
       @runner.expects :detect_tester_failure
       @runner.expects :run_failures
@@ -74,6 +75,36 @@ describe Fuci::Runner do
       IO.expects(:popen).with command
 
       @runner.send :run_failures
+    end
+  end
+
+  describe '.check_build' do
+    describe 'status is green' do
+      before { @runner.stubs(:build_status).returns :green }
+
+      it 'prints a message that the lastest build passed and exits' do
+        @runner.expects(:puts).with 'Build is green.'
+        @runner.expects :exit
+        @runner.send :check_build
+      end
+    end
+
+    describe 'status is yellow' do
+      before { @runner.stubs(:build_status).returns :yellow }
+
+      it 'prints a message that the build in question passed is bad and exits' do
+        @runner.expects(:puts).with 'Build has errored. Check build for more info.'
+        @runner.expects :exit
+        @runner.send :check_build
+      end
+    end
+
+    describe 'status is red' do
+      before { @runner.stubs(:build_status).returns :red }
+
+      it 'returns nil' do
+        expect(@runner.send :check_build ).to_be_nil
+      end
     end
   end
 end
