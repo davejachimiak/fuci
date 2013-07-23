@@ -4,7 +4,7 @@ module Fuci
   class Runner
     extend Forwardable
 
-    def_delegators :Fuci, :server, :testers, :initialize_testers
+    def_delegators :Fuci, :server, :testers, :initialize_server, :initialize_testers
     attr_accessor  :log, :detected_tester, :failures
 
     def run

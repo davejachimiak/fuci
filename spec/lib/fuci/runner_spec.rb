@@ -25,6 +25,13 @@ describe Fuci::Runner do
     end
   end
 
+  describe '.initialize_server' do
+    it 'initializes the server' do
+      Fuci.expects(:initialize_server)
+      @runner.send :initialize_server
+    end
+  end
+
   describe '.initialize_testers' do
     it 'initializes the testers' do
       Fuci.expects(:initialize_testers)
