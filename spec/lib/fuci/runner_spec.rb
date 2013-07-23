@@ -8,19 +8,18 @@ describe Fuci::Runner do
 
   describe '.run' do
     before do
-      @runner.stubs(:server).returns :AnServer
-      @runner.expects :initialize_server!
       @runner.expects :initialize_testers!
+      @runner.expects :initialize_server!
       @runner.expects :fetch_log
       @runner.expects :detect_tester_failure
       @runner.expects :run_failures
     end
 
-    it 'ensures a server is present, ' +
-      'fetches the log from the server, ' +
+    it 'initializes the testers, ' +
+      'initializes the server, ' +
+      'fetches the log, ' +
       'detects which tester has the failure, ' +
-      "collects the tester's failure from the log, " +
-      'an runs the failures.' do
+      'and runs the failures.' do
       @runner.run
     end
   end

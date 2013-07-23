@@ -9,8 +9,8 @@ module Fuci
     attr_accessor  :log, :detected_tester, :failures
 
     def run
-      initialize_server!
       initialize_testers!
+      initialize_server!
       fetch_log
       detect_tester_failure
       run_failures
@@ -33,7 +33,5 @@ module Fuci
         io.each { |string| puts string }
       end
     end
-
-    class ServerError < StandardError; end;
   end
 end
