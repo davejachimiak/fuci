@@ -1,3 +1,5 @@
+require 'fuci/tester'
+
 module Fuci
   class RSpec < Fuci::Tester
     FAILURE_INDICATOR = 'Failed examples:'
