@@ -61,6 +61,8 @@ describe Fuci do
   end
 
   describe '.configure' do
+    after { Fuci.server = nil }
+
     it 'yields the block with self' do
       server = :server
       Fuci.configure do |f|
@@ -68,18 +70,31 @@ describe Fuci do
       end
 
       expect(Fuci.server).to_equal server
-      Fuci.server = nil
     end
   end
 
-  describe '.initialize_testers' do
+  describe '.initialize_server!' do
+    after { Fuci.server = nil }
+
+    it 'sets .server to an initialized server' do
+      class Cool; end;
+      Fuci.server = Cool
+      Cool.stubs(:new).returns new_cool = mock
+
+      Fuci.initialize_server!
+
+      expect(Fuci.server).to_equal new_cool
+    end
+  end
+
+  describe '.initialize_testers!' do
     it 'mutates the testers attribute to initialized testers' do
       class Cool; end;
       Fuci.instance_variable_set :@testers, [Cool]
-      Cool.stubs(:new).returns cool = mock
-      testers = [cool]
+      Cool.stubs(:new).returns new_cool = mock
+      testers = [new_cool]
 
-      Fuci.initialize_testers
+      Fuci.initialize_testers!
 
       expect(Fuci.testers).to_equal testers
     end

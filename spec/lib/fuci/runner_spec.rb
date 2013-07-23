@@ -9,8 +9,8 @@ describe Fuci::Runner do
   describe '.run' do
     before do
       @runner.stubs(:server).returns :AnServer
-      @runner.expects :initialize_server
-      @runner.expects :initialize_testers
+      @runner.expects :initialize_server!
+      @runner.expects :initialize_testers!
       @runner.expects :fetch_log
       @runner.expects :detect_tester_failure
       @runner.expects :run_failures
@@ -27,15 +27,15 @@ describe Fuci::Runner do
 
   describe '.initialize_server' do
     it 'initializes the server' do
-      Fuci.expects(:initialize_server)
-      @runner.send :initialize_server
+      Fuci.expects :initialize_server!
+      @runner.send :initialize_server!
     end
   end
 
   describe '.initialize_testers' do
     it 'initializes the testers' do
-      Fuci.expects(:initialize_testers)
-      @runner.send :initialize_testers
+      Fuci.expects :initialize_testers!
+      @runner.send :initialize_testers!
     end
   end
 

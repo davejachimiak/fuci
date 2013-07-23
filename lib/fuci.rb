@@ -28,7 +28,21 @@ module Fuci
     DEFAULT_TESTERS
   end
 
+  def self.initialize_server!
+    self.server = initialize_server
+  end
+
+  def self.initialize_testers!
+    @testers = initialize_testers
+  end
+
+  private
+
+  def self.initialize_server
+    server.new
+  end
+
   def self.initialize_testers
-    @testers = testers.map { |tester| tester.new }
+    testers.map { |tester| tester.new }
   end
 end
