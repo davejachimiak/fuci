@@ -8,7 +8,8 @@ describe Fuci::Runner do
 
   describe '.run' do
     before do
-      @runner.expects :ensure_server
+      @runner.stubs(:server).returns :AnServer
+      @runner.expects :initialize_server
       @runner.expects :initialize_testers
       @runner.expects :fetch_log
       @runner.expects :detect_tester_failure
@@ -21,25 +22,6 @@ describe Fuci::Runner do
       "collects the tester's failure from the log, " +
       'an runs the failures.' do
       @runner.run
-    end
-  end
-
-  describe '.ensure_server' do
-    before { @runner.stubs(:server).returns :AnServer }
-
-    describe 'when a server is attached to the module' do
-      it 'is a no-op' do
-        expect(@runner.send :ensure_server ).to_equal nil
-      end
-    end
-
-    describe 'when a server is not attached' do
-      before { @runner.stubs(:server).returns nil }
-
-      it 'raises an error with an appropriate message' do
-        expect { @runner.send :ensure_server }.
-          to_raise Fuci::Runner::ServerError
-      end
     end
   end
 

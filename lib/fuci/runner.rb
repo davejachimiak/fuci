@@ -8,7 +8,7 @@ module Fuci
     attr_accessor  :log, :detected_tester, :failures
 
     def run
-      ensure_server
+      initialize_server
       initialize_testers
       fetch_log
       detect_tester_failure
@@ -16,12 +16,6 @@ module Fuci
     end
 
     private
-
-    def ensure_server
-      unless server
-        raise Fuci::Runner::ServerError, 'A server must be declared in Fuci config.'
-      end
-    end
 
     def fetch_log
       self.log = server.fetch_log
