@@ -1,7 +1,13 @@
 module Fuci
   module Configurable
-    def self.configure
-      yield self
+    module ClassMethods
+      def configure
+        yield self
+      end
+    end
+
+    def self.included base
+      base.extend ClassMethods
     end
   end
 end

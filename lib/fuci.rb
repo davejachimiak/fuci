@@ -1,7 +1,10 @@
 require 'fuci/runner'
 require 'fuci/rspec'
+require 'fuci/configurable'
 
 module Fuci
+  include Configurable
+
   DEFAULT_TESTERS = [Fuci::RSpec]
 
   class << self
@@ -10,10 +13,6 @@ module Fuci
 
   def self.run
     Fuci::Runner.new.run
-  end
-
-  def self.configure
-    yield self
   end
 
   def self.add_testers *testers
