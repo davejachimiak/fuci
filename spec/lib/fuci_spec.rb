@@ -24,6 +24,15 @@ describe Fuci do
     end
   end
 
+  describe '.options/=' do
+    it 'is an accessor' do
+      expect(Fuci.options).to_be_nil
+      Fuci.options = options = mock
+      expect(Fuci.options).to_equal options
+      Fuci.options = nil
+    end
+  end
+
   describe '.testers' do
     after { Fuci.instance_variable_set :@testers, [] }
 
