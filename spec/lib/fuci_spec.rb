@@ -25,11 +25,12 @@ describe Fuci do
   end
 
   describe '.options/=' do
+    after { Fuci.options = {} }
+
     it 'is an accessor' do
-      expect(Fuci.options).to_be_nil
-      Fuci.options = options = mock
+      expect(Fuci.options).to_equal({})
+      Fuci.options = options = { options: :yup }
       expect(Fuci.options).to_equal options
-      Fuci.options = nil
     end
   end
 

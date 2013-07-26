@@ -8,7 +8,12 @@ module Fuci
   DEFAULT_TESTERS = [Fuci::RSpec]
 
   class << self
-    attr_accessor :server, :options
+    attr_accessor :server
+    attr_writer   :options
+  end
+
+  def self.options
+    @options ||= {}
   end
 
   def self.run
