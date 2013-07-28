@@ -10,8 +10,8 @@ module Fuci
     attr_accessor  :log, :detected_tester, :failures
 
     def run
-      initialize_testers!
       initialize_server!
+      initialize_testers!
       check_build
       fetch_log
       detect_tester_failure

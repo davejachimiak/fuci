@@ -8,8 +8,8 @@ describe Fuci::Runner do
 
   describe '.run' do
     before do
-      @runner.expects :initialize_testers!
       @runner.expects :initialize_server!
+      @runner.expects :initialize_testers!
       @runner.expects :check_build
       @runner.expects :fetch_log
       @runner.expects :detect_tester_failure
