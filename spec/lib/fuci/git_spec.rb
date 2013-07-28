@@ -56,7 +56,7 @@ describe Fuci::Git do
 
   describe '#remote_repo_command' do
     it 'returns the git/unix command to return the remote owner/repo' do
-      command = "git remote -v | grep origin | grep push | awk 'match($0, /:(.*\/.*)\./) { print substr($0, RSTART+1, RLENGTH-2) }'"
+      command = "git remote -v | grep origin | grep push | awk 'match($0, /:\(.*)\.git/) { print substr($0, RSTART+1, RLENGTH-5) }'"
       expect(@test_class.send :remote_repo_command).to_equal command
     end
   end

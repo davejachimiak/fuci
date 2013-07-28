@@ -3,7 +3,7 @@ module Fuci
     CURRENT_BRANCH_COMMAND    = "git branch | sed -n '/\* /s///p'"
     REMOTE_MASTER_SHA_COMMAND = "git rev-parse origin/master"
     REMOTE_REPO_COMMAND       =
-      "git remote -v | grep origin | grep push | awk 'match($0, /:(.*\/.*)\./) { print substr($0, RSTART+1, RLENGTH-2) }'"
+      "git remote -v | grep origin | grep push | awk 'match($0, /:\(.*)\.git/) { print substr($0, RSTART+1, RLENGTH-5) }'"
 
     def current_branch_name
       with_popen current_branch_command
