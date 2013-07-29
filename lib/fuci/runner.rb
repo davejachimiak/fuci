@@ -30,6 +30,7 @@ module Fuci
     end
 
     def fetch_log
+      puts "Fetching log from build..."
       self.log = server.fetch_log
     end
 
@@ -37,10 +38,12 @@ module Fuci
       self.detected_tester = testers.detect do |tester|
         tester.indicates_failure? log
       end
+      puts "Failure detected: #{detected_tester.class.name.split('::').last}"
     end
 
     def run_failures
       IO.popen detected_tester.command(log) do |io|
+        puts 'Running failed specs...'
         io.each { |string| puts string }
       end
     end

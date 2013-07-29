@@ -40,9 +40,11 @@ describe Fuci::Runner do
   end
 
   describe '.fetch_log' do
-    it 'delegates to the server' do
-      @runner.stubs(:server).returns poop = mock
-      poop.stubs(:fetch_log).returns log = mock
+    it 'logs fetching; sets the log with delegation to the server' do
+      @runner.expects(:puts).with "Fetching log from build..."
+      @runner.stubs(:server).returns server = mock
+      server.stubs(:fetch_log).returns log = mock
+
       @runner.send :fetch_log
 
       expect(@runner.send :log ).to_equal log
@@ -55,7 +57,9 @@ describe Fuci::Runner do
       @runner.stubs(:log).returns log = mock
       [rspec, cucumber].each { |t| t.stubs :indicates_failure? }
       konacha.stubs(:indicates_failure?).with(log).returns true
+      konacha.class.stubs(:name).returns 'Fuci::Konacha'
       testers = [rspec, konacha, cucumber]
+      @runner.expects(:puts).with 'Failure detected: Konacha'
       @runner.stubs(:testers).returns testers
 
       @runner.send :detect_tester_failure
