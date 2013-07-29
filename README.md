@@ -5,22 +5,15 @@ Run failed tests from your last build on the command line.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your fuci extension's Gemspec:
 
-    gem 'fuci'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install fuci
+    .add_dependency 'fuci', '~> 0.1'
 
 ## Usage
-
-TODO: Write usage instructions.
-
+### Server extensions
+Coming soon...
+### Tester extensions
+Coming soon...
 ## Contributing
 
 1. Fork it
