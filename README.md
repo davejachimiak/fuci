@@ -1,7 +1,7 @@
 # Fuci
-[![Build Status](https://travis-ci.org/davejachimiak/fuci.png?branch=dj-initial_functionality)](https://travis-ci.org/davejachimiak/fuci)
+[![Build Status](https://travis-ci.org/davejachimiak/fuci.png?branch=master)](https://travis-ci.org/davejachimiak/fuci)
 
-Run failed tests from your last build on the command line.
+A base gem providing the general case for running CI failures locally.
 
 ## Installation
 
@@ -9,10 +9,55 @@ Add this line to your fuci extension's Gemspec:
 
     .add_dependency 'fuci', '~> 0.1'
 
+## Known server extensions
+* [Fuci::Travis](https://github.com/davejachimiak/fuci-travis)
+
 ## Usage
-### Server extensions
-Coming soon...
-### Tester extensions
+### Creating server extensions
+#### Configuring Fuci base with the server
+Somewhere in the required code of the server extension, the server must
+be set like so:
+```ruby
+Fuci.configure do |fu|
+  fu.server = Fuci::MyCiAgent::ServerClass
+end
+```
+or
+```ruby
+module Fuci
+  configure do |fu|
+    fu.server = Fuci::MyCiAgent::ServerClass
+  end
+
+  module MyCiAgent
+    ...
+    ...
+  end
+end
+```
+
+The ServerClass in this example must be an initializable constant whose
+instance implements the server interface.
+
+#### The server interface
+The `Fuci::Server` interface class that tells what the runner
+expects of server extensions. As of this version, it expects two
+methods: `#build_status` and `#fetch_log`. See that file for more
+details on what they should return.
+
+#### The binstub
+Server extensions should ship with their own binstub. `fuci` is
+preffered. It's short and easy to type. To avoid possible conflicts
+between local server extensions, prefer that users execute
+`bundle binstubs <server-extension>`.
+
+Fuci binstubs should do the following:
+* Require the extension
+* Load a configuration file, if necessary
+* Handle command-line arguments
+* Call `Fuci.run`
+
+### Creating tester extensions
 Coming soon...
 ## Contributing
 

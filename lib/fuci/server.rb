@@ -10,7 +10,7 @@ module Fuci
       raise NotImplementedError
     end
 
-    # must return a string with characters
+    # must return a log as as string string with characters
     # denoting ascii color removed
     def fetch_log
       raise NotImplementedError
