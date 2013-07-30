@@ -13,7 +13,7 @@ Add this line to your fuci extension's Gemspec:
 * [Fuci::Travis](https://github.com/davejachimiak/fuci-travis)
 
 ## Native command-line options
-*  Runs the failed tests from your last `fuci` command.
+Run the failed tests from your last `fuci` command.
 
 ```sh
 $ fuci --last
