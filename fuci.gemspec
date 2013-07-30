@@ -9,8 +9,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dave Jachimiak"]
   spec.email         = ["dave.jachimiak@gmail.com"]
   spec.description   = %q{FUCK YOU CI}
-  spec.summary       = %q{TBA}
-  spec.homepage      = ""
+  spec.summary       =
+  %q{Fuci is a library that covers the general case for running
+  recent failures from recent CI (continuous integration) builds
+  locally. It includes interfaces for server (e.g. Travis,
+  TeamCity) and tester (e.g. RSpec, Cucumber) extensions.}
+  spec.homepage      = "https://github.com/davejachimiak/fuci"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
