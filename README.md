@@ -12,6 +12,16 @@ Add this line to your fuci extension's Gemspec:
 ## Known server extensions
 * [Fuci::Travis](https://github.com/davejachimiak/fuci-travis)
 
+## Native command-line options
+*  Runs the failed tests from your last `fuci` command.
+```sh
+$ fuci --last
+```
+or
+```sh
+$ fuci -l
+```
+
 ## Usage
 ### Creating server extensions
 #### Configuring Fuci base with the server
@@ -48,13 +58,14 @@ details on what they should return.
 #### The binstub
 Server extensions should ship with their own binstub. `fuci` is
 preffered. It's short and easy to type. To avoid possible conflicts
-between local server extensions, prefer that users execute
-`bundle binstubs <server-extension>`.
+between local server extensions, prefer that users execute `bundle
+binstubs <server-extension>`.
 
 Fuci binstubs should do the following:
 * Require the extension
 * Load a configuration file, if necessary
-* Handle command-line arguments
+* Send `ARGV` to `Fuci.options`. `Fuci.options[:argv] = ARGV`
+* Handle custom command-line arguments
 * Call `Fuci.run`
 
 ### Creating tester extensions
