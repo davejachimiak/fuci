@@ -52,19 +52,31 @@ describe Fuci::Runner do
   end
 
   describe '.detect_tester_failure' do
-    it 'detects the first tester failure in the log' do
-      rspec, konacha, cucumber = mock, mock, mock
-      @runner.stubs(:log).returns log = mock
-      [rspec, cucumber].each { |t| t.stubs :indicates_failure? }
-      konacha.stubs(:indicates_failure?).with(log).returns true
-      konacha.class.stubs(:name).returns 'Fuci::Konacha'
-      testers = [rspec, konacha, cucumber]
-      @runner.expects(:puts).with 'Failure detected: Konacha'
-      @runner.stubs(:testers).returns testers
+    describe 'a failure is detected by a tester plugin' do
+      it 'detects the first tester failure in the log' do
+        rspec, konacha, cucumber = mock, mock, mock
+        @runner.stubs(:log).returns log = mock
+        [rspec, cucumber].each { |t| t.stubs :indicates_failure? }
+        konacha.stubs(:indicates_failure?).with(log).returns true
+        konacha.class.stubs(:name).returns 'Fuci::Konacha'
+        testers = [rspec, konacha, cucumber]
+        @runner.expects(:puts).with 'Failure detected: Konacha'
+        @runner.stubs(:testers).returns testers
 
-      @runner.send :detect_tester_failure
+        @runner.send :detect_tester_failure
 
-      expect(@runner.send :detected_tester ).to_equal konacha
+        expect(@runner.send :detected_tester ).to_equal konacha
+      end
+    end
+
+    describe 'if there was no detected tester' do
+      it 'logs that no failure was detected by any tester plugin' do
+        @runner.stubs(:testers).returns []
+        @runner.expects(:puts_with_exit).
+          with 'No failure was detected by any tester plugins.'
+
+        @runner.send :detect_tester_failure
+      end
     end
   end
 

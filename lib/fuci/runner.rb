@@ -38,7 +38,12 @@ module Fuci
       self.detected_tester = testers.detect do |tester|
         tester.indicates_failure? log
       end
-      puts "Failure detected: #{detected_tester.class.name.split('::').last}"
+
+      if detected_tester
+        puts "Failure detected: #{detected_tester.class.name.split('::').last}"
+      else
+        puts_with_exit 'No failure was detected by any tester plugins.'
+      end
     end
 
     def run_failures
