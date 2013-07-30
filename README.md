@@ -14,6 +14,7 @@ Add this line to your fuci extension's Gemspec:
 
 ## Native command-line options
 *  Runs the failed tests from your last `fuci` command.
+
 ```sh
 $ fuci --last
 ```
