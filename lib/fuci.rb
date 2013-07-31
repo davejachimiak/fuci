@@ -9,7 +9,6 @@ module Fuci
 
   class << self
     attr_accessor :server
-    attr_writer   :options
   end
 
   def self.run
