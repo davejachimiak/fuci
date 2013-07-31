@@ -13,13 +13,16 @@ describe Fuci::Runner do
       @runner.expects :check_build
       @runner.expects :fetch_log
       @runner.expects :detect_tester_failure
+      @runner.expects :cache_tester_command
       @runner.expects :run_failures
     end
 
     it 'initializes the testers, ' +
       'initializes the server, ' +
+      'checks the build, ' +
       'fetches the log, ' +
       'detects which tester has the failure, ' +
+      'caches the tester command, ' +
       'and runs the failures.' do
       @runner.run
     end

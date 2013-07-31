@@ -15,6 +15,7 @@ module Fuci
       check_build
       fetch_log
       detect_tester_failure
+      cache_tester_command
       run_failures
     end
 
