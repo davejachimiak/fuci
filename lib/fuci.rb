@@ -17,7 +17,7 @@ module Fuci
   end
 
   def self.run
-    Fuci::Runner.new.run
+    Fuci::Runner.create.run
   end
 
   def self.add_testers *testers

@@ -1,4 +1,4 @@
-require 'command_cache'
+require 'fuci/command_cache'
 require 'forwardable'
 
 module Fuci
