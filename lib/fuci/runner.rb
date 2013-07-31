@@ -1,4 +1,5 @@
 require 'fuci/command_cache'
+require 'fuci/cached_command_runner'
 require 'fuci/cli_options'
 require 'forwardable'
 
