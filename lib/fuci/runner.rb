@@ -1,4 +1,5 @@
 require 'fuci/command_cache'
+require 'fuci/cli_options'
 require 'forwardable'
 
 module Fuci
@@ -18,6 +19,10 @@ module Fuci
       detect_tester_failure
       cache_tester_command
       run_failures
+    end
+
+    def self.create
+      CliOptions.run_last_command? ? CachedCommandRunner.new : new
     end
 
     private

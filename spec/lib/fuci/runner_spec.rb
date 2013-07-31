@@ -3,6 +3,7 @@ require_relative '../../../lib/fuci/runner'
 
 stub_class 'IO'
 stub_class 'Fuci::CommandCache'
+stub_class 'Fuci::CachedCommandRunner'
 
 describe Fuci::Runner do
   before { @runner = Fuci::Runner.new }
@@ -29,21 +30,42 @@ describe Fuci::Runner do
     end
   end
 
-  describe '.initialize_server' do
+  describe '.create' do
+    before { @run_last_command = Fuci::CliOptions.stubs :run_last_command? }
+
+    describe 'when the cli options say to run the last command' do
+      it 'returns a cached command runner' do
+        Fuci::CachedCommandRunner.stubs(:new).
+          returns cached_command_runner = mock
+        @run_last_command.returns true
+        expect(Fuci::Runner.create).to_equal cached_command_runner
+      end
+    end
+
+    describe 'when a last command flag is not passed' do
+      it 'returns a cached command runner' do
+        Fuci::Runner.stubs(:new).returns runner = mock
+        @run_last_command.returns false
+        expect(Fuci::Runner.create).to_equal runner
+      end
+    end
+  end
+
+  describe '#initialize_server' do
     it 'initializes the server' do
       Fuci.expects :initialize_server!
       @runner.send :initialize_server!
     end
   end
 
-  describe '.initialize_testers' do
+  describe '#initialize_testers' do
     it 'initializes the testers' do
       Fuci.expects :initialize_testers!
       @runner.send :initialize_testers!
     end
   end
 
-  describe '.fetch_log' do
+  describe '#fetch_log' do
     it 'logs fetching; sets the log with delegation to the server' do
       @runner.expects(:puts).with "Fetching log from build..."
       @runner.stubs(:server).returns server = mock
@@ -55,7 +77,7 @@ describe Fuci::Runner do
     end
   end
 
-  describe '.detect_tester_failure' do
+  describe '#detect_tester_failure' do
     describe 'a failure is detected by a tester plugin' do
       it 'detects the first tester failure in the log' do
         rspec, konacha, cucumber = mock, mock, mock
@@ -98,7 +120,7 @@ describe Fuci::Runner do
     end
   end
 
-  describe '.run_failures' do
+  describe '#run_failures' do
     it 'runs the failrues locally' do
       @runner.stubs(:detected_tester).returns detected_tester = mock
       @runner.stubs(:log).returns log = mock
@@ -112,7 +134,7 @@ describe Fuci::Runner do
     end
   end
 
-  describe '.check_build' do
+  describe '#check_build' do
     describe 'status is green' do
       before { @runner.stubs(:build_status).returns :green }
 
