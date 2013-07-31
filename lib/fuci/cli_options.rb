@@ -9,7 +9,7 @@ module Fuci
     private
 
     def self.argv
-      Fuci.options[:argv] || []
+      ARGV
     end
   end
 end
