@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'fuci/command_cache'
 
 module Fuci
   class CachedCommandRunner
