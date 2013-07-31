@@ -2,6 +2,7 @@ require_relative '../../spec_helper'
 require_relative '../../../lib/fuci/runner'
 
 stub_class 'IO'
+stub_class 'Fuci::CommandCache'
 
 describe Fuci::Runner do
   before { @runner = Fuci::Runner.new }
@@ -80,6 +81,20 @@ describe Fuci::Runner do
 
         @runner.send :detect_tester_failure
       end
+    end
+  end
+
+  describe '#cache_tester_command' do
+    it 'calls #cache on CommandCache' do
+      @runner.stubs(:log).returns log = mock
+      @runner.stubs(:detected_tester).returns tester = mock
+      tester.stubs(:command).with(log).returns command = mock
+      Fuci::CommandCache.stubs(:new).
+        with(command).
+        returns cache = mock
+      cache.expects :cache_command
+
+      @runner.send :cache_tester_command
     end
   end
 

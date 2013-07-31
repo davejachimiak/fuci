@@ -47,6 +47,11 @@ module Fuci
       end
     end
 
+    def cache_tester_command
+      command = detected_tester.command log
+      CommandCache.new(command).cache_command
+    end
+
     def run_failures
       IO.popen detected_tester.command(log) do |io|
         puts 'Running failed specs...'
