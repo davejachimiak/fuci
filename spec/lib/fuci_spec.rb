@@ -24,16 +24,6 @@ describe Fuci do
     end
   end
 
-  describe '.options/=' do
-    after { Fuci.options = {} }
-
-    it 'is an accessor' do
-      expect(Fuci.options).to_equal({})
-      Fuci.options = options = { options: :yup }
-      expect(Fuci.options).to_equal options
-    end
-  end
-
   describe '.testers' do
     after { Fuci.instance_variable_set :@testers, [] }
 

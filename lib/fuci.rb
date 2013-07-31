@@ -12,10 +12,6 @@ module Fuci
     attr_writer   :options
   end
 
-  def self.options
-    @options ||= {}
-  end
-
   def self.run
     Fuci::Runner.create.run
   end
