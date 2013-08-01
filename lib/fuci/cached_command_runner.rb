@@ -10,7 +10,7 @@ module Fuci
     def run
       puts 'Running specs from last call to fuci.'
 
-      IO.popen cached_command do |id|
+      IO.popen cached_command do |io|
         io.each { |string| puts string }
       end
     end
