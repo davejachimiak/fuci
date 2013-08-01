@@ -7,10 +7,27 @@ A base gem providing the general case for running CI failures locally.
 
 Add this line to your fuci extension's Gemspec:
 
-    .add_dependency 'fuci', '~> 0.1'
+```ruby
+Gem::Specification.new do |spec|
+  ...
+  .add_dependency 'fuci', '~> 0.2'
+  ...
+end
+```
 
 ## Known server extensions
 * [Fuci::Travis](https://github.com/davejachimiak/fuci-travis)
+
+## Native command-line options
+Run the failed tests from your last `fuci` command.
+
+```sh
+$ fuci --last
+```
+or
+```sh
+$ fuci -l
+```
 
 ## Usage
 ### Creating server extensions
@@ -48,13 +65,12 @@ details on what they should return.
 #### The binstub
 Server extensions should ship with their own binstub. `fuci` is
 preffered. It's short and easy to type. To avoid possible conflicts
-between local server extensions, prefer that users execute
-`bundle binstubs <server-extension>`.
+between local server extensions, prefer that users execute `bundle
+binstubs <server-extension>`.
 
 Fuci binstubs should do the following:
 * Require the extension
 * Load a configuration file, if necessary
-* Handle command-line arguments
 * Call `Fuci.run`
 
 ### Creating tester extensions

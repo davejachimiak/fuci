@@ -11,7 +11,7 @@ module Fuci
     end
 
     def command log
-      "#{base_command} #{failures log }"
+      @command ||= "#{base_command} #{failures log }"
     end
 
     private

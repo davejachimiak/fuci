@@ -7,8 +7,8 @@ require_relative '../../lib/fuci'
 
 describe Fuci do
   describe '.run' do
-    it 'calls #run on an instnace on runner' do
-      Fuci::Runner.stubs(:new).returns runner = mock
+    it 'calls #run on an instance on runner' do
+      Fuci::Runner.stubs(:create).returns runner = mock
       runner.expects :run
 
       Fuci.run
@@ -21,16 +21,6 @@ describe Fuci do
       Fuci.server = server = mock
       expect(Fuci.server).to_equal server
       Fuci.server = nil
-    end
-  end
-
-  describe '.options/=' do
-    after { Fuci.options = {} }
-
-    it 'is an accessor' do
-      expect(Fuci.options).to_equal({})
-      Fuci.options = options = { options: :yup }
-      expect(Fuci.options).to_equal options
     end
   end
 

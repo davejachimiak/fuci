@@ -9,15 +9,10 @@ module Fuci
 
   class << self
     attr_accessor :server
-    attr_writer   :options
-  end
-
-  def self.options
-    @options ||= {}
   end
 
   def self.run
-    Fuci::Runner.new.run
+    Fuci::Runner.create.run
   end
 
   def self.add_testers *testers
