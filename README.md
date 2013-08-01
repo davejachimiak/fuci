@@ -65,8 +65,6 @@ binstubs <server-extension>`.
 Fuci binstubs should do the following:
 * Require the extension
 * Load a configuration file, if necessary
-* Send `ARGV` to `Fuci.options`. `Fuci.options[:argv] = ARGV`
-* Handle custom command-line arguments
 * Call `Fuci.run`
 
 ### Creating tester extensions
