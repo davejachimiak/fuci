@@ -1,3 +1,6 @@
+require 'fuci/command_cache'
+require 'fuci/cached_command_runner'
+require 'fuci/cli_options'
 require 'forwardable'
 
 module Fuci
@@ -15,7 +18,12 @@ module Fuci
       check_build
       fetch_log
       detect_tester_failure
+      cache_tester_command
       run_failures
+    end
+
+    def self.create
+      CliOptions.run_last_command? ? CachedCommandRunner.new : new
     end
 
     private
@@ -44,6 +52,11 @@ module Fuci
       else
         puts_with_exit 'No failure was detected by any tester plugins.'
       end
+    end
+
+    def cache_tester_command
+      command = detected_tester.command log
+      CommandCache.new(command).cache_command
     end
 
     def run_failures
