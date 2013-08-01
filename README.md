@@ -7,7 +7,13 @@ A base gem providing the general case for running CI failures locally.
 
 Add this line to your fuci extension's Gemspec:
 
-    .add_dependency 'fuci', '~> 0.1'
+```ruby
+Gem::Specification.new do |spec|
+  ...
+  .add_dependency 'fuci', '~> 0.2'
+  ...
+end
+```
 
 ## Known server extensions
 * [Fuci::Travis](https://github.com/davejachimiak/fuci-travis)
