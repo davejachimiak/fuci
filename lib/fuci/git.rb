@@ -1,8 +1,9 @@
 module Fuci
   module Git
-    CURRENT_BRANCH_COMMAND    = "git branch | sed -n '/\* /s///p'"
-    REMOTE_MASTER_SHA_COMMAND = "git rev-parse origin/master"
-    REMOTE_REPO_COMMAND       =
+    MASTER                         = 'master'
+    CURRENT_BRANCH_COMMAND         = "git branch | sed -n '/\* /s///p'"
+    REMOTE_SHA_FROM_BRANCH_COMMAND = lambda { |branch_name| "git rev-parse origin/#{branch_name}" }
+    REMOTE_REPO_COMMAND            =
       "git remote -v | grep origin | grep push | awk 'match($0, /:\(.*)\.git/) { print substr($0, RSTART+1, RLENGTH-5) }'"
 
     def current_branch_name
@@ -14,7 +15,11 @@ module Fuci
     end
 
     def remote_master_sha
-      with_popen remote_master_sha_command
+      with_popen remote_sha_from_branch_command(MASTER)
+    end
+
+    def remote_sha_from branch_name
+      with_popen remote_sha_from_branch_command(branch_name)
     end
 
     private
@@ -33,8 +38,8 @@ module Fuci
       REMOTE_REPO_COMMAND
     end
 
-    def remote_master_sha_command
-      REMOTE_MASTER_SHA_COMMAND
+    def remote_sha_from_branch_command branch_name
+      REMOTE_SHA_FROM_BRANCH_COMMAND.(branch_name)
     end
   end
 end

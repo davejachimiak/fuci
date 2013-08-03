@@ -30,11 +30,23 @@ describe Fuci::Git do
 
   describe '#remote_master_sha' do
     it 'returns the remote master sha' do
-      @test_class.stubs(:remote_master_sha_command).
-        returns remote_master_sha_command = mock
-      @test_class.expects(:with_popen).with remote_master_sha_command
+      @test_class.stubs(:remote_sha_from_branch_command).
+        with('master').
+        returns command = mock
+      @test_class.expects(:with_popen).with command
 
       @test_class.remote_master_sha
+    end
+  end
+
+  describe '#remote_sha_from' do
+    it 'returns the remote sha from the branch name passed in' do
+      @test_class.stubs(:remote_sha_from_branch_command).
+        with(branch_name = 'branch_name').
+        returns command = mock
+      @test_class.expects(:with_popen).with command
+
+      @test_class.remote_sha_from branch_name
     end
   end
 
@@ -61,10 +73,11 @@ describe Fuci::Git do
     end
   end
 
-  describe '#remote_master_sha_command' do
-    it 'returns the git/unix command to return the remote master sha' do
-      current_branch_command = @test_class.send :remote_master_sha_command
-      expect(current_branch_command).to_equal "git rev-parse origin/master"
+  describe '#remote_sha_from_branch_command' do
+    it 'returns the git/unix command to return the remote sha from the branch' do
+      branch_name = 'branch_name'
+      command = @test_class.send :remote_sha_from_branch_command, branch_name
+      expect(command).to_equal "git rev-parse origin/#{branch_name}"
     end
   end
 end
