@@ -22,6 +22,10 @@ module Fuci
       with_popen remote_sha_from_branch_command(branch_name)
     end
 
+    def pull_merge_sha_from branch_name
+      with_popen pull_merge_sha_command(branch_name)
+    end
+
     private
 
     def with_popen command

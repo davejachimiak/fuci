@@ -50,6 +50,26 @@ describe Fuci::Git do
     end
   end
 
+  describe '#pull_merge_sha_from' do
+    describe 'when there is a pull request' do
+      it 'returns the merge sha from the pull request' do
+        branch_name = 'branch_name'
+        remote_sha  = '192948fjfmxmvksjri'
+
+        @test_class.stubs(:pull_merge_sha_command).
+          with(branch_name).
+          returns command = mock
+        @test_class.stubs(:with_popen).with(command).returns remote_sha
+
+        expect(@test_class.pull_merge_sha_from(branch_name)).
+          to_equal remote_sha
+      end
+    end
+
+    describe 'when there is no pull request' do
+    end
+  end
+
   describe '#with_popen' do
     it 'runs the command with popen' do
       current_branch = 'current_branch'
