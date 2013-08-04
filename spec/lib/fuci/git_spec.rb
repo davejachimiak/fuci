@@ -51,29 +51,18 @@ describe Fuci::Git do
   end
 
   describe '#pull_merge_sha_from' do
-    before do
-      @branch_name = 'branch_name'
-      @command     = mock
+    it 'gets the merge sha from the pull number' do
+      @test_class.stubs(:pull_number_from).
+        with(branch_name = 'branch_name').
+        returns pull_number = 1
       @test_class.stubs(:pull_merge_sha_command).
-        with(@branch_name).
-        returns @command
-      @with_popen = @test_class.stubs(:with_popen).with @command
-    end
+        with(pull_number).
+        returns command = mock
+      @test_class.stubs(:with_popen).
+        with(command).
+        returns sha = 'didizxndfjii223994w'
 
-    describe 'when there is a pull request' do
-      it 'returns the merge sha from the pull request' do
-        @with_popen.returns remote_sha = '19298fjnxnfjsdf84'
-        expect(@test_class.pull_merge_sha_from(@branch_name)).
-          to_equal remote_sha
-      end
-    end
-
-    describe 'when there is no pull request' do
-      it 'raises a NoPullError' do
-        @with_popen.returns ''
-        expect { @test_class.pull_merge_sha_from(@branch_name) }.
-          to_raise Fuci::Git::NoPullError
-      end
+      expect(@test_class.pull_merge_sha_from(branch_name)).to_equal sha
     end
   end
 
@@ -105,6 +94,14 @@ describe Fuci::Git do
       branch_name = 'branch_name'
       command = @test_class.send :remote_sha_from_branch_command, branch_name
       expect(command).to_equal "git rev-parse origin/#{branch_name}"
+    end
+  end
+
+  describe '#pull_merge_sha_command' do
+    it 'is the pull merge sha command with the pull number' do
+      pull_number = 1
+      command     = @test_class.send :pull_merge_sha_command, pull_number
+      expect(command).to_equal "git ls-remote origin | grep refs\/pull\/#{pull_number}\/merge | awk '{ print $1 };'"
     end
   end
 end
