@@ -30,13 +30,13 @@ module Fuci
     end
 
     def pull_number_from branch_name
+      remote_sha  = remote_sha_from branch_name
+      pull_number = with_popen pull_number_from_sha_command(remote_sha)
+
+      pull_number.empty? ? raise(NoPullError) : pull_number
     end
 
     private
-
-    def pull_merge_sha_command pull_number
-      PULL_MERGE_SHA_COMMAND.(pull_number)
-    end
 
     def with_popen command
       IO.popen command do |io|
@@ -54,6 +54,10 @@ module Fuci
 
     def remote_sha_from_branch_command branch_name
       REMOTE_SHA_FROM_BRANCH_COMMAND.(branch_name)
+    end
+
+    def pull_merge_sha_command pull_number
+      PULL_MERGE_SHA_COMMAND.(pull_number)
     end
 
     class NoPullError < StandardError; end;

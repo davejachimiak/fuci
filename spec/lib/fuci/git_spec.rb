@@ -66,6 +66,39 @@ describe Fuci::Git do
     end
   end
 
+  describe '#pull_number_from' do
+    before do
+      @branch_name = 'branch_name'
+      command     = mock
+      remote_sha  = '12k3asdifi23ia92'
+      @test_class.stubs(:remote_sha_from).
+        with(@branch_name).
+        returns remote_sha
+      @test_class.stubs(:pull_number_from_sha_command).
+        with(remote_sha).
+        returns command
+      @with_popen = @test_class.stubs(:with_popen).with command
+    end
+
+    describe 'when there is a pull number' do
+      before { @with_popen.returns @pull_number = '1' }
+
+      it 'returns the pull number with the remote sha' do
+        expect(@test_class.pull_number_from(@branch_name)).
+          to_equal @pull_number
+      end
+    end
+
+    describe 'when there is no pull number' do
+      before { @with_popen.returns '' }
+
+      it 'raises a NoPullError' do
+        expect { @test_class.pull_number_from(@branch_name) }.
+          to_raise Fuci::Git::NoPullError
+      end
+    end
+  end
+
   describe '#with_popen' do
     it 'runs the command with popen' do
       current_branch = 'current_branch'
