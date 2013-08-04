@@ -2,11 +2,14 @@ module Fuci
   module Git
     MASTER                         = 'master'
     CURRENT_BRANCH_COMMAND         = "git branch | sed -n '/\* /s///p'"
-    REMOTE_SHA_FROM_BRANCH_COMMAND = lambda { |branch_name| "git rev-parse origin/#{branch_name}" }
-    PULL_MERGE_SHA_COMMAND         =
-      lambda { |pull_number| "git ls-remote origin | grep refs\/pull\/#{pull_number}\/merge | awk '{ print $1 };'" }
     REMOTE_REPO_COMMAND            =
       "git remote -v | grep origin | grep push | awk 'match($0, /:\(.*)\.git/) { print substr($0, RSTART+1, RLENGTH-5) }'"
+    REMOTE_SHA_FROM_BRANCH_COMMAND =
+      lambda { |branch_name| "git rev-parse origin/#{branch_name}" }
+    PULL_MERGE_SHA_COMMAND         =
+      lambda { |pull_number| "git ls-remote origin | grep refs\/pull\/#{pull_number}\/merge | awk '{ print $1 };'" }
+    PULL_NUMBER_FROM_SHA_COMMAND   =
+      lambda { |sha| "git ls-remote origin | grep #{sha} | grep pull | perl -n -e '/pull\/(.*)\/head/ && print $1'" }
 
     def current_branch_name
       with_popen current_branch_command
@@ -58,6 +61,10 @@ module Fuci
 
     def pull_merge_sha_command pull_number
       PULL_MERGE_SHA_COMMAND.(pull_number)
+    end
+
+    def pull_number_from_sha_command sha
+      PULL_NUMBER_FROM_SHA_COMMAND.(sha)
     end
 
     class NoPullError < StandardError; end;
