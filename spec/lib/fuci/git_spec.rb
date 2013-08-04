@@ -51,22 +51,29 @@ describe Fuci::Git do
   end
 
   describe '#pull_merge_sha_from' do
+    before do
+      @branch_name = 'branch_name'
+      @command     = mock
+      @test_class.stubs(:pull_merge_sha_command).
+        with(@branch_name).
+        returns @command
+      @with_popen = @test_class.stubs(:with_popen).with @command
+    end
+
     describe 'when there is a pull request' do
       it 'returns the merge sha from the pull request' do
-        branch_name = 'branch_name'
-        remote_sha  = '192948fjfmxmvksjri'
-
-        @test_class.stubs(:pull_merge_sha_command).
-          with(branch_name).
-          returns command = mock
-        @test_class.stubs(:with_popen).with(command).returns remote_sha
-
-        expect(@test_class.pull_merge_sha_from(branch_name)).
+        @with_popen.returns remote_sha = '19298fjnxnfjsdf84'
+        expect(@test_class.pull_merge_sha_from(@branch_name)).
           to_equal remote_sha
       end
     end
 
     describe 'when there is no pull request' do
+      it 'raises a NoPullError' do
+        @with_popen.returns ''
+        expect { @test_class.pull_merge_sha_from(@branch_name) }.
+          to_raise Fuci::Git::NoPullError
+      end
     end
   end
 
