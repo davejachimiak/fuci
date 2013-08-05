@@ -29,8 +29,6 @@ module Fuci
 
     def pull_merge_sha_from branch_name
       pull_number = pull_number_from branch_name
-      command = pull_merge_sha_command(pull_number)
-      puts command
       with_popen pull_merge_sha_command(pull_number)
     end
 
