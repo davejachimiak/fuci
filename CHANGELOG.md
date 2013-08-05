@@ -1,3 +1,9 @@
+### version 0.3.0 *August 5, 2013*
+* Adds three methods to Git helper:
+1. `#remote_sha_from(branch_name)`
+2. `#pull_merge_sha_from(branch_name)`
+3. `#pull_number_from(branch_name`
+
 ### version 0.2.0 *July 31, 2013*
 * Offers command-line option (`--last`, `-l`) which runs failed tests
 from last call to `fuci`
