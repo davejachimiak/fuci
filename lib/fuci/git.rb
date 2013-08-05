@@ -34,9 +34,12 @@ module Fuci
 
     def pull_number_from branch_name
       remote_sha  = remote_sha_from branch_name
-      pull_number = with_popen pull_number_from_sha_command(remote_sha)
 
-      pull_number.empty? ? raise(NoPullError) : pull_number
+      begin
+        with_popen pull_number_from_sha_command(remote_sha)
+      rescue NoResponseError
+        raise NoPullError
+      end
     end
 
     private

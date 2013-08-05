@@ -90,7 +90,7 @@ describe Fuci::Git do
     end
 
     describe 'when there is no pull number' do
-      before { @with_popen.returns '' }
+      before { @with_popen.raises Fuci::Git::NoResponseError }
 
       it 'raises a NoPullError' do
         expect { @test_class.pull_number_from(@branch_name) }.
