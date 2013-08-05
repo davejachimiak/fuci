@@ -134,7 +134,7 @@ describe Fuci::Git do
     it 'is the pull merge sha command with the pull number' do
       pull_number = 1
       command     = @test_class.send :pull_merge_sha_command, pull_number
-      expect(command).to_equal "git ls-remote origin | grep refs\/pull\/#{pull_number}\/merge | awk '{ print $1 };'"
+      expect(command).to_equal "git ls-remote origin | grep refs\\/pull\\/#{pull_number}\\/merge | awk '{ print $1 };'"
     end
   end
 
@@ -142,7 +142,7 @@ describe Fuci::Git do
     it 'gets the pull number with the sha' do
       sha     = '234asdf'
       command = @test_class.send :pull_number_from_sha_command, sha
-      expect(command).to_equal "git ls-remote origin | grep #{sha} | grep pull | perl -n -e '/pull\/(.*)\/head/ && print $1'"
+      expect(command).to_equal "git ls-remote origin | grep #{sha} | grep pull | perl -n -e '/pull\\/(.*)\\/head/ && print $1'"
     end
   end
 end
