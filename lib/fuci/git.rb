@@ -7,9 +7,9 @@ module Fuci
     REMOTE_SHA_FROM_BRANCH_COMMAND =
       lambda { |branch_name| "git rev-parse origin/#{branch_name}" }
     PULL_MERGE_SHA_FROM_NUMBER_COMMAND =
-      lambda { |pull_number| "git ls-remote origin | grep refs\/pull\/#{pull_number}\/merge | awk '{ print $1 };'" }
+      lambda { |pull_number| "git ls-remote origin | grep refs\\/pull\\/#{pull_number}\\/merge | awk '{ print $1 };'" }
     PULL_NUMBER_FROM_SHA_COMMAND =
-      lambda { |sha| "git ls-remote origin | grep #{sha} | grep pull | perl -n -e '/pull\/(.*)\/head/ && print $1'" }
+      lambda { |sha| "git ls-remote origin | grep #{sha} | grep pull | perl -n -e '/pull\\/(.*)\\/head/ && print $1'" }
 
     def current_branch_name
       with_popen current_branch_command
@@ -29,6 +29,8 @@ module Fuci
 
     def pull_merge_sha_from branch_name
       pull_number = pull_number_from branch_name
+      command = pull_merge_sha_command(pull_number)
+      puts command
       with_popen pull_merge_sha_command(pull_number)
     end
 
