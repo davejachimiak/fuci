@@ -10,7 +10,7 @@ Add this line to your fuci extension's Gemspec:
 ```ruby
 Gem::Specification.new do |spec|
   ...
-  spec.add_dependency 'fuci', '~> 0.2'
+  spec.add_dependency 'fuci', '~> 0.3'
   ...
 end
 ```
