@@ -100,11 +100,21 @@ describe Fuci::Git do
   end
 
   describe '#with_popen' do
-    it 'runs the command with popen' do
-      current_branch = 'current_branch'
-      result         = @test_class.send :with_popen, "echo #{current_branch}"
+    describe 'when there is a string response' do
+      it 'runs the command with popen' do
+        current_branch = 'current_branch'
+        result         = @test_class.send :with_popen, "echo #{current_branch}"
 
-      expect(result).to_equal current_branch
+        expect(result).to_equal current_branch
+      end
+    end
+
+    describe 'when the response is nil' do
+      it 'raises a no response error' do
+        IO.stubs(:popen).with(command = '').yields []
+
+        expect { @test_class.send :with_popen, command }.to_raise Fuci::Git::NoResponseError
+      end
     end
   end
 

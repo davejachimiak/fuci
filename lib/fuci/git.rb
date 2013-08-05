@@ -43,7 +43,11 @@ module Fuci
 
     def with_popen command
       IO.popen command do |io|
-        io.first.chomp
+        if first_line = io.first
+          first_line.chomp
+        else
+          raise NoResponseError
+        end
       end
     end
 
@@ -67,6 +71,7 @@ module Fuci
       PULL_NUMBER_FROM_SHA_COMMAND.(sha)
     end
 
+    class NoResponseError < StandardError; end;
     class NoPullError < StandardError; end;
   end
 end
