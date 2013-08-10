@@ -2,8 +2,10 @@ require 'fuci/tester'
 
 module Fuci
   class Cucumber < Tester
+    FAILURE_INDICATOR = 'Failing Scenarios:'
+
     def indicates_failure? log
-      true
+      log.include? FAILURE_INDICATOR
     end
   end
 end
@@ -32,7 +34,7 @@ describe Fuci::Cucumber do
       before { @log = 'jdivzxdfiweafFailed Examples:jeidxl' }
 
       it 'returns false' do
-        # expect(@cucumber.indicates_failure? @log ).to_equal false
+        expect(@cucumber.indicates_failure? @log ).to_equal false
       end
     end
   end
