@@ -3,9 +3,25 @@ require 'fuci/tester'
 module Fuci
   class Cucumber < Tester
     FAILURE_INDICATOR = 'Failing Scenarios:'
+    BASE_COMMAND      = 'cucumber'
+    FAIL_FILE_CAPTURE = /cucumber (.*) #/
 
     def indicates_failure? log
       log.include? FAILURE_INDICATOR
+    end
+
+    def command log
+      @command ||= "#{base_command} #{failures log }"
+    end
+
+    private
+
+    def base_command
+      BASE_COMMAND
+    end
+
+    def failures log
+      log.scan(FAIL_FILE_CAPTURE).join ' '
     end
   end
 end
@@ -36,6 +52,19 @@ describe Fuci::Cucumber do
       it 'returns false' do
         expect(@cucumber.indicates_failure? @log ).to_equal false
       end
+    end
+  end
+
+  describe '#command' do
+    it 'returns "cucumber <failure string>"' do
+      log = """
+        cucumber is #ljasdfois\ncucumber ok #jcicisj\ncucumber for #ie
+        iejfasdi\ncucumber testing #iiiirrpepwpqapc
+      """
+
+      command = @cucumber.command log
+
+      expect(command).to_equal 'cucumber is ok for testing'
     end
   end
 end

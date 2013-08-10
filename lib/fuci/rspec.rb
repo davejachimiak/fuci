@@ -1,7 +1,7 @@
 require 'fuci/tester'
 
 module Fuci
-  class RSpec < Fuci::Tester
+  class RSpec < Tester
     FAILURE_INDICATOR = 'Failed examples:'
     BASE_COMMAND      = 'rspec --tty'
     FAIL_FILE_CAPTURE = /rspec (.*) #/

@@ -29,7 +29,7 @@ describe Fuci::RSpec do
   end
 
   describe '#command' do
-    it 'returns "rspec <failure string>"' do
+    it 'returns "rspec --tty <failure string>"' do
       log = """
         rspec is #ljasdfois\nrspec ok #jcicisj\nrspec for #ie
         iejfasdi\nrspec testing #iiiirrpepwpqapc
