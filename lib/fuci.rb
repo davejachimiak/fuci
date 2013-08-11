@@ -1,11 +1,12 @@
-require 'fuci/runner'
 require 'fuci/rspec'
+require 'fuci/runner'
+require 'fuci/cucumber'
 require 'fuci/configurable'
 
 module Fuci
   include Configurable
 
-  DEFAULT_TESTERS = [Fuci::RSpec]
+  DEFAULT_TESTERS = [Fuci::RSpec, Fuci::Cucumber]
 
   class << self
     attr_accessor :server

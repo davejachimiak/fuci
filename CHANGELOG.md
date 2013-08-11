@@ -1,3 +1,6 @@
+### version 0.4.0 *August 10, 2013*
+* Adds Fuci::Cucumber as native tester plugin
+
 ### version 0.3.0 *August 5, 2013*
 * Adds three methods to Git helper:
 1. `#remote_sha_from(branch_name)`
