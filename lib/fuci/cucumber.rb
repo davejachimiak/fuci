@@ -1,10 +1,10 @@
 require 'fuci/tester'
 
 module Fuci
-  class RSpec < Tester
-    FAILURE_INDICATOR = 'Failed examples:'
-    BASE_COMMAND      = 'rspec --tty'
-    FAIL_FILE_CAPTURE = /rspec (.*) #/
+  class Cucumber < Tester
+    FAILURE_INDICATOR = 'Failing Scenarios:'
+    BASE_COMMAND      = 'cucumber --color'
+    FAIL_FILE_CAPTURE = /cucumber (.*) #/
 
     def indicates_failure? log
       log.include? FAILURE_INDICATOR
