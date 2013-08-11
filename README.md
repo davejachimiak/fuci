@@ -17,6 +17,7 @@ end
 
 ## Known server extensions
 * [Fuci::Travis](https://github.com/davejachimiak/fuci-travis)
+* [Fuci::TeamCity](https://github.com/davejachimiak/fuci-team_city)
 
 ## Native command-line options
 Run the failed tests from your last `fuci` command.
