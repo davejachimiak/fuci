@@ -37,7 +37,7 @@ describe Fuci::Cucumber do
 
       command = @cucumber.command log
 
-      expect(command).to_equal 'cucumber is ok for testing'
+      expect(command).to_equal 'cucumber --color is ok for testing'
     end
   end
 end

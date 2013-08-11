@@ -3,7 +3,7 @@ require 'fuci/tester'
 module Fuci
   class Cucumber < Tester
     FAILURE_INDICATOR = 'Failing Scenarios:'
-    BASE_COMMAND      = 'cucumber'
+    BASE_COMMAND      = 'cucumber --color'
     FAIL_FILE_CAPTURE = /cucumber (.*) #/
 
     def indicates_failure? log
