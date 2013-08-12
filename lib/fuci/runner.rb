@@ -60,8 +60,11 @@ module Fuci
     end
 
     def run_failures
-      IO.popen detected_tester.command(log) do |io|
+      command = detected_tester.command(log)
+
+      IO.popen command  do |io|
         puts 'Running failed specs...'
+        puts command
         io.each { |string| puts string }
       end
     end
