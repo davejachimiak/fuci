@@ -128,7 +128,10 @@ describe Fuci::Runner do
         stubs(:command).
         with(log).
         returns command = mock
-      IO.expects(:popen).with command
+      IO.expects(:popen).with(command).yields io = [line = mock]
+      @runner.expects(:puts).with 'Running failed specs...'
+      @runner.expects(:puts).with command
+      @runner.expects(:puts).with line
 
       @runner.send :run_failures
     end
