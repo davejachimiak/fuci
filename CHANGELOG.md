@@ -1,3 +1,6 @@
+### version 0.4.1 *August 12, 2013*
+* Adds command logging
+
 ### version 0.4.0 *August 10, 2013*
 * Adds Fuci::Cucumber as native tester plugin
 
