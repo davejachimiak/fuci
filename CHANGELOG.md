@@ -1,3 +1,7 @@
+### version 0.4.2 *December 14, 2013*
+* Removes support for Rubinius
+* Changes git command for remote repo
+
 ### version 0.4.1 *August 12, 2013*
 * Adds command logging
 
