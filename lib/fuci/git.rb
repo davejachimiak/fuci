@@ -3,7 +3,7 @@ module Fuci
     MASTER                 = 'master'
     CURRENT_BRANCH_COMMAND = "git branch | sed -n '/\* /s///p'"
     REMOTE_REPO_COMMAND    =
-      "git remote -v | grep origin | grep push | awk 'match($0, /:\(.*)\.git/) { print substr($0, RSTART+1, RLENGTH-5) }'"
+      "git remote show -n origin | grep Push | cut -d/ -f4- | sed 's/\.git//g'"
     REMOTE_SHA_FROM_BRANCH_COMMAND =
       lambda { |branch_name| "git rev-parse origin/#{branch_name}" }
     PULL_MERGE_SHA_FROM_NUMBER_COMMAND =
